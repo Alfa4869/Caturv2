@@ -9,9 +9,9 @@ package GameRule;
  * @author ASUS
  */
 public class Move {
-    int rowFrom, colFrom, rowTo, colTo;
-    String model;
-    String type;
+    public int rowFrom, colFrom, rowTo, colTo;
+    public String model;
+    public String type;
 
     public Move(int rowFrom, int colFrom, int rowTo, int colTo, String model, String type) {
         this.rowFrom = rowFrom;

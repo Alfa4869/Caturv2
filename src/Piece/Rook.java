@@ -16,6 +16,8 @@ public class Rook extends Piece{
         super(row, col, "Rook", isWhite, PB);
     }
     
+    
+    @Override
     public void getImage(){
         try{
             if (isWhite) {

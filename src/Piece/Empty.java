@@ -12,8 +12,8 @@ import GameRule.Board;
  */
 public class Empty extends Piece{
 
-    public Empty(int row, int col, boolean isWhite, Board PB) {
-        super(row, col, "Empty", isWhite, PB);
+    public Empty(int row, int col, Board PB) {
+        super(row, col, "Empty", true, PB);
     }
     
     

@@ -43,10 +43,13 @@ public class Piece {
         counter = 0;
         hadMoved = false;
         moveSince = 0;
+        
+        getImage();
     }
     
     public Move[] getMoves(){
-        
+        moves = new Move[20];
+        counter = 0;
         getPieceMoves();
         return moves;
         
@@ -80,6 +83,10 @@ public class Piece {
     
     
     protected void getPieceMoves(){
+        
+    }
+    
+    protected void getImage(){
         
     }
         

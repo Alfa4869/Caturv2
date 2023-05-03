@@ -7,6 +7,9 @@ package caturv2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import GameRule.Board;
+import GameRule.Move;
+
 /**
  *
  * @author ASUS
@@ -16,13 +19,49 @@ public class Cursor {
     GamePanel gp;
     KeyHandler keyH;
     
+    
+    //lokal
     boolean noUp, noDown, noLeft, noRight, noSpace;
+    int currentRow, currentCol;
+    Move[] movesToShow;
 
     public Cursor(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
         row = 0;
         col = 0;
+        
+        movesToShow = new Move[20];
+    }
+    
+    
+    void resetMovesToShow(){
+        movesToShow = new Move[20];
+    }
+    
+    
+    Move getThisMove(int row, int col){
+        for (Move move : movesToShow) {
+            if (move == null) {
+                break;
+            }
+            if (move.rowTo == row && move.colTo == col) {
+                return move;
+            }
+        }
+        return null;
+    }
+    
+    boolean isInMoves(int row, int col){
+        for (Move move : movesToShow) {
+            if (move == null) {
+                break;
+            }
+            if (move.rowTo == row && move.colTo == col) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public void update(){
@@ -68,6 +107,18 @@ public class Cursor {
             
             
             
+            if (isInMoves(row,col)) {
+                gp.PB.movePiece(getThisMove(row,col));
+                resetMovesToShow();
+                
+                
+            }else{
+                currentRow = row;
+                currentCol = col;
+                movesToShow = gp.PB.sq[row][col].getMoves();
+            }
+            
+            
             
             
             
@@ -78,8 +129,22 @@ public class Cursor {
     }
     
     public void draw(Graphics2D g2){
+        drawAvailableMove(g2);
+        
         g2.setColor(Color.orange);
         g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
+        
+        
+    }
+    
+    public void drawAvailableMove(Graphics2D g2){
+        g2.setColor(Color.green);
+        for (Move movesToShow1 : movesToShow) {
+            if (movesToShow1 == null) {
+                break;
+            }
+            g2.fillRect(movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo * gp.tileSize, gp.tileSize, gp.tileSize);
+        }
     }
     
     

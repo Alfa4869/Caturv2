@@ -33,7 +33,7 @@ public class Board {
     private void initBoard(){
         for (int row = 0; row < sq.length; row++) {
             for (int col = 0; col < sq[row].length; col++) {
-                sq[row][col] = new Empty(row,col,true, this);
+                sq[row][col] = new Empty(row,col, this);
             }
         }
         
@@ -63,6 +63,18 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             sq[6][i] = new Pawn(6,i,true, this);
         }
+    }
+    
+    public void movePiece(Move move){
+        
+        
+        
+        //type normal
+        sq[move.rowTo][move.colTo] = sq[move.rowFrom][move.colFrom];
+        sq[move.rowTo][move.colTo].row = move.rowTo;
+        sq[move.rowTo][move.colTo].col = move.colTo;
+        sq[move.rowTo][move.colTo].hadMoved = true;
+        sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
     }
     
     

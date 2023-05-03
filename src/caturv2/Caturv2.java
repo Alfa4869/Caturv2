@@ -4,6 +4,8 @@
  */
 package caturv2;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ASUS
@@ -15,6 +17,25 @@ public class Caturv2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    }
+        
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setTitle("Menganjay");
+        
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel);
+        
+        window.pack();
+        
+        
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        
+        
+        
+        
+        gamePanel.startGameThread();
     
+    }
 }

@@ -4,19 +4,81 @@
  */
 package Piece;
 
+import GameRule.Move;
+import GameRule.Board;
 /**
  *
  * @author ASUS
  */
 public class Piece {
+    
+    Board PB;
+    
+    //Attribute
     int row, col;
     String model;
+    boolean isWhite;
+    boolean hadMoved;
+    int moveSince;
+    
+    //local variables
+    Move[] moves;
+    int counter;
+    
+    
 
-    public Piece(int row, int col, String model) {
+    public Piece(int row, int col, String model, boolean isWhite, Board PB) {
         this.row = row;
         this.col = col;
         this.model = model;
+        this.isWhite = isWhite;
+        this.PB = PB;
+        
+        moves = new Move[20];
+        counter = 0;
+        hadMoved = false;
+        moveSince = 0;
     }
+    
+    public Move[] getMoves(){
+        
+        getPieceMoves();
+        return moves;
+        
+    }
+    
+    protected void addMove(int toRow, int toCol, String type){
+        moves[counter] = new Move(row, col, toRow, toCol, model, type);
+        counter++;
+    }
+    
+    protected void addMove(int toRow, int toCol){
+        moves[counter] = new Move(row, col, toRow, toCol, model);
+        counter++;
+    }
+    
+    public boolean isEmpty(int row, int col){
+        return "Empty".equals(PB.sq[row][col].model);
+    }
+    
+    public boolean isOpponent(int row, int col){
+        return PB.sq[row][col].isWhite != isWhite;
+    }
+    
+    public boolean isHadMoved(int row, int col){
+        return PB.sq[row][col].hadMoved;
+    }
+    
+    public boolean isEnPassantAble(int row, int col){
+        return PB.sq[row][col].moveSince == 1;
+    }
+    
+    
+    protected void getPieceMoves(){
+        
+    }
+        
+    
     
     
 }

@@ -6,6 +6,9 @@ package Piece;
 
 import GameRule.Move;
 import GameRule.Board;
+import java.awt.image.BufferedImage;
+
+
 /**
  *
  * @author ASUS
@@ -15,11 +18,13 @@ public class Piece {
     Board PB;
     
     //Attribute
-    int row, col;
-    String model;
-    boolean isWhite;
-    boolean hadMoved;
-    int moveSince;
+    public int row, col;
+    public String model;
+    public boolean isWhite;
+    public boolean hadMoved;
+    public int moveSince;
+    public BufferedImage image;
+    
     
     //local variables
     Move[] moves;

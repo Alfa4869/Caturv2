@@ -5,6 +5,7 @@
 package Piece;
 
 import GameRule.Board;
+import javax.imageio.ImageIO;
 /**
  *
  * @author ASUS
@@ -13,6 +14,21 @@ public class King extends Piece{
 
     public King(int row, int col, boolean isWhite, Board PB) {
         super(row, col, "King", isWhite, PB);
+    }
+    
+    
+    public void getImage(){
+        try{
+            if (isWhite) {
+                image = ImageIO.read(getClass().getResourceAsStream("asset/king_white.png"));
+            }else{
+                image = ImageIO.read(getClass().getResourceAsStream("asset/king_black.png"));
+            }
+                
+            
+            
+        }catch(Exception e){}
+        
     }
     
     public void getPieceMoves(){

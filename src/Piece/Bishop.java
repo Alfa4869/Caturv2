@@ -5,6 +5,7 @@
 package Piece;
 
 import GameRule.Board;
+import javax.imageio.ImageIO;
 /**
  *
  * @author ASUS
@@ -13,6 +14,20 @@ public class Bishop extends Piece{
 
     public Bishop(int row, int col, boolean isWhite, Board PB) {
         super(row, col, "Bishop", isWhite, PB);
+    }
+    
+    public void getImage(){
+        try{
+            if (isWhite) {
+                image = ImageIO.read(getClass().getResourceAsStream("asset/bishop_white.png"));
+            }else{
+                image = ImageIO.read(getClass().getResourceAsStream("asset/bishop_black.png"));
+            }
+                
+            
+            
+        }catch(Exception e){}
+        
     }
     
     

@@ -5,6 +5,7 @@
 package Piece;
 
 import GameRule.Board;
+import javax.imageio.ImageIO;
 /**
  *
  * @author ASUS
@@ -13,6 +14,21 @@ public class Pawn extends Piece{
 
     public Pawn(int row, int col, boolean isWhite, Board PB) {
         super(row, col, "Pawn", isWhite, PB);
+    }
+    
+    
+    public void getImage(){
+        try{
+            if (isWhite) {
+                image = ImageIO.read(getClass().getResourceAsStream("asset/pawn_white.png"));
+            }else{
+                image = ImageIO.read(getClass().getResourceAsStream("asset/pawn_black.png"));
+            }
+                
+            
+            
+        }catch(Exception e){}
+        
     }
     
     

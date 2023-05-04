@@ -65,16 +65,68 @@ public class Board {
         }
     }
     
+    public void addMoveSince(){
+        for (int row = 0; row < sq.length; row++) {
+            for (int col = 0; col < sq[row].length; col++) {
+                
+                if (sq[row][col].hadMoved) {
+                    sq[row][col].moveSince++;
+                }
+            }
+        }
+    }
+    
     public void movePiece(Move move){
         
+        //type Castling
+        if ("Castling".equals(move.type)) {
+             
+             
+            sq[move.rowTo][move.colTo] = sq[move.rowFrom][move.colFrom];
+            sq[move.rowTo][move.colTo].row = move.rowTo;
+            sq[move.rowTo][move.colTo].col = move.colTo;
+            sq[move.rowTo][move.colTo].hadMoved = true;
+            sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
+             
+            
+            //king or queen side
+            if (move.colTo > 4) {
+                
+                
+                Move rookMove = new Move(move.rowTo,7, move.rowTo,5,"Rook");
+                movePiece(rookMove);
+                
+            }else{
+                
+                Move rookMove = new Move(move.rowTo,0, move.rowTo,3,"Rook");
+                movePiece(rookMove);
+            }
+            
+            
+        }
         
+        
+        //type enPassant
+        if ("enPassant".equals(move.type)) {
+            sq[move.rowTo][move.colTo] = sq[move.rowFrom][move.colFrom];
+            sq[move.rowTo][move.colTo].row = move.rowTo;
+            sq[move.rowTo][move.colTo].col = move.colTo;
+            sq[move.rowTo][move.colTo].hadMoved = true;
+            sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
+            sq[move.rowFrom][move.colTo] = new Empty(move.rowFrom, move.colFrom, this );
+        }
         
         //type normal
-        sq[move.rowTo][move.colTo] = sq[move.rowFrom][move.colFrom];
-        sq[move.rowTo][move.colTo].row = move.rowTo;
-        sq[move.rowTo][move.colTo].col = move.colTo;
-        sq[move.rowTo][move.colTo].hadMoved = true;
-        sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
+        if ("normal".equals(move.type)) {
+            sq[move.rowTo][move.colTo] = sq[move.rowFrom][move.colFrom];
+            sq[move.rowTo][move.colTo].row = move.rowTo;
+            sq[move.rowTo][move.colTo].col = move.colTo;
+            sq[move.rowTo][move.colTo].hadMoved = true;
+            sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
+        }
+        
+        addMoveSince();
+        
     }
     
     
@@ -84,27 +136,22 @@ public class Board {
         int x,y;
         
         y = 0;
-        for (int row = 0; row < sq.length; row++) {
+        for (Piece[] sq1 : sq) {
             isWhite = !isWhite;
             x = 0;
-            for (int col = 0; col < sq[row].length; col++) {
+            for (Piece sq11 : sq1) {
                 if (isWhite) {
                     g2.setColor(Color.white);
                 }else{
                     g2.setColor(Color.gray);
                 }
                 isWhite = !isWhite;
-                
                 g2.fillRect(x, y, gp.tileSize, gp.tileSize);
-                
-                
-                if (!"Empty".equals(sq[row][col].model)) {
-                    g2.drawImage(sq[row][col].image, x, y, null);
+                if (!"Empty".equals(sq11.model)) {
+                    g2.drawImage(sq11.image, x, y, null);
                 }
-                
                 x += gp.tileSize;
             }
-            
             y += gp.tileSize;
         }
         

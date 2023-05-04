@@ -21,7 +21,7 @@ public class Queen extends Piece{
             if (isWhite) {
                 image = ImageIO.read(getClass().getResourceAsStream("asset/queen_white.png"));
             }else{
-                image = ImageIO.read(getClass().getResourceAsStream("asset/pawn_black.png"));
+                image = ImageIO.read(getClass().getResourceAsStream("asset/queen_black.png"));
             }
                 
             

@@ -31,7 +31,11 @@ public class Bishop extends Piece{
     }
     
     
-    public void getPieceMove(){
+    @Override
+    public void getPieceMoves(){
+        
+        
+        
         for (int i = 1; i <= 7; i++) {
             if (col + i <= 7 && row + i <= 7) {
                 if (isEmpty(row + i, col + i) || isOpponent(row + i, col + i)) {

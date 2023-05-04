@@ -69,11 +69,11 @@ public class King extends Piece{
         if (!hadMoved) {
             //short castle
             if (!isHadMoved(row,7) && isEmpty(row,5) && isEmpty(row,6)) {
-                addMove(row,6);
+                addMove(row,6,"Castling");
             }
             //long castle
             if (!isHadMoved(row,0) && isEmpty(row,1) && isEmpty(row,2) && isEmpty(row,3)) {
-                addMove(row,2);
+                addMove(row,2,"Castling");
             }
         }
     }

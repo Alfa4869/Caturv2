@@ -69,16 +69,30 @@ public class Piece {
         return "Empty".equals(PB.sq[row][col].model);
     }
     
+    public boolean isInBoard(int row, int col){
+        return (row>=0 && row<=7) && (col>=0 && col<=7);
+    }
+    
     public boolean isOpponent(int row, int col){
-        return PB.sq[row][col].isWhite != isWhite;
+        if (isInBoard(row,col) && !isEmpty(row,col)) {
+            return PB.sq[row][col].isWhite != isWhite;
+        }
+        return false;
     }
     
     public boolean isHadMoved(int row, int col){
-        return PB.sq[row][col].hadMoved;
+        if (isInBoard(row,col)) {
+            return PB.sq[row][col].hadMoved;
+        }
+        return false;
     }
     
     public boolean isEnPassantAble(int row, int col){
-        return PB.sq[row][col].moveSince == 1;
+        if (isInBoard(row,col)) {
+            return PB.sq[row][col].moveSince == 1;
+        }
+        return false;
+        
     }
     
     

@@ -6,6 +6,7 @@ package Piece;
 
 import GameRule.Move;
 import GameRule.Board;
+import GameRule.CekSkak;
 import java.awt.image.BufferedImage;
 
 
@@ -44,7 +45,7 @@ public class Piece {
         hadMoved = false;
         moveSince = 0;
         
-        getImage();
+        
     }
     
     public Move[] getMoves(){
@@ -55,14 +56,53 @@ public class Piece {
         
     }
     
+    public Move[] getLegalMoves(){
+        Move[] newMoves= getMoves();
+        
+        
+        for (int idx = 0; idx < newMoves.length; idx++) {
+            
+            if (newMoves[idx] == null) {
+                break;
+            }
+            
+            CekSkak CK = new CekSkak(PB.sq, newMoves[idx]);
+            if (CK.isSkak(newMoves[idx])) {
+                System.out.println("ada yang skak");
+                newMoves[idx].type = "illegal";
+            }
+        }
+        
+        return newMoves;
+        
+        
+        
+    }
+    
     protected void addMove(int toRow, int toCol, String type){
-        moves[counter] = new Move(row, col, toRow, toCol, model, type);
+        
+        Move move = new Move(row, col, toRow, toCol, model,isWhite, type );
+        
+        
+        
+        
+        moves[counter] = move;
         counter++;
+        
+        
     }
     
     protected void addMove(int toRow, int toCol){
-        moves[counter] = new Move(row, col, toRow, toCol, model);
+        
+        
+        Move move = new Move(row, col, toRow, toCol, model, isWhite);
+        
+        
+        
+       
+        moves[counter] = move;
         counter++;
+        
     }
     
     public boolean isEmpty(int row, int col){
@@ -100,7 +140,7 @@ public class Piece {
         
     }
     
-    protected void getImage(){
+    public void getImage(){
         
     }
         

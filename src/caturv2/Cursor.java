@@ -45,6 +45,7 @@ public class Cursor {
             if (move == null) {
                 break;
             }
+            
             if (move.rowTo == row && move.colTo == col) {
                 return move;
             }
@@ -57,6 +58,7 @@ public class Cursor {
             if (move == null) {
                 break;
             }
+            
             if (move.rowTo == row && move.colTo == col) {
                 return true;
             }
@@ -115,7 +117,7 @@ public class Cursor {
             }else{
                 currentRow = row;
                 currentCol = col;
-                movesToShow = gp.PB.sq[row][col].getMoves();
+                movesToShow = gp.PB.sq[row][col].getLegalMoves();
             }
             
             
@@ -142,6 +144,9 @@ public class Cursor {
         for (Move movesToShow1 : movesToShow) {
             if (movesToShow1 == null) {
                 break;
+            }
+            if ("illegal".equals(movesToShow1.type)) {
+                continue;
             }
             g2.fillRect(movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo * gp.tileSize, gp.tileSize, gp.tileSize);
         }

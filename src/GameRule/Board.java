@@ -30,6 +30,13 @@ public class Board {
         initBoard();
     }
     
+    public Board(Piece[][] sq) {
+        
+        
+        this.sq = sq;
+        
+    }
+    
     private void initBoard(){
         for (int row = 0; row < sq.length; row++) {
             for (int col = 0; col < sq[row].length; col++) {
@@ -63,6 +70,12 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             sq[6][i] = new Pawn(6,i,true, this);
         }
+        
+        for (int row = 0; row < sq.length; row++) {
+            for (int col = 0; col < sq[row].length; col++) {
+                sq[row][col].getImage();
+            }
+        }
     }
     
     public void addMoveSince(){
@@ -93,12 +106,12 @@ public class Board {
             if (move.colTo > 4) {
                 
                 
-                Move rookMove = new Move(move.rowTo,7, move.rowTo,5,"Rook");
+                Move rookMove = new Move(move.rowTo,7, move.rowTo,5,"Rook", move.fromColor);
                 movePiece(rookMove);
                 
             }else{
                 
-                Move rookMove = new Move(move.rowTo,0, move.rowTo,3,"Rook");
+                Move rookMove = new Move(move.rowTo,0, move.rowTo,3,"Rook", move.fromColor);
                 movePiece(rookMove);
             }
             

@@ -12,22 +12,25 @@ public class Move {
     public int rowFrom, colFrom, rowTo, colTo;
     public String model;
     public String type;
+    public boolean fromColor;
 
-    public Move(int rowFrom, int colFrom, int rowTo, int colTo, String model, String type) {
+    public Move(int rowFrom, int colFrom, int rowTo, int colTo, String model, boolean fromColor, String type) {
         this.rowFrom = rowFrom;
         this.colFrom = colFrom;
         this.rowTo = rowTo;
         this.colTo = colTo;
         this.model = model;
+        this.fromColor = fromColor;
         this.type = type;
     }
 
-    public Move(int rowFrom, int colFrom, int rowTo, int colTo, String model) {
+    public Move(int rowFrom, int colFrom, int rowTo, int colTo, String model, boolean fromColor) {
         this.rowFrom = rowFrom;
         this.colFrom = colFrom;
         this.rowTo = rowTo;
         this.colTo = colTo;
         this.model = model;
+        this.fromColor = fromColor;
         this.type = "normal";
     }
     

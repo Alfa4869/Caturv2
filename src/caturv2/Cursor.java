@@ -9,8 +9,10 @@ import java.awt.Graphics2D;
 
 import GameRule.Board;
 import GameRule.Move;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -20,6 +22,7 @@ public class Cursor {
     int row, col;
     GamePanel gp;
     KeyHandler keyH;
+    BufferedImage cursorImage, moveImage;
     
     
     //lokal
@@ -34,6 +37,8 @@ public class Cursor {
         col = 0;
         
         movesToShow = new ArrayList();
+        
+        getImages();
     }
     
     
@@ -114,6 +119,9 @@ public class Cursor {
             if (isInMoves(row,col)) {
                 gp.PB.movePiece(getThisMove(row,col));
                 resetMovesToShow();
+                gp.PB.isCheckMate(true);
+                gp.PB.isCheckMate(false);
+                
                 
                 
             }else{
@@ -132,20 +140,36 @@ public class Cursor {
         
     }
     
+    
+    private void getImages(){
+        try{
+            
+            cursorImage = ImageIO.read(getClass().getResourceAsStream("asset/cursor.png"));
+
+            moveImage = ImageIO.read(getClass().getResourceAsStream("asset/legal_move.png"));
+            
+                
+            
+            
+        }catch(Exception e){}
+    }
+    
     public void draw(Graphics2D g2){
         drawAvailableMove(g2);
         
-        g2.setColor(Color.orange);
-        g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
+        
+        g2.drawImage(cursorImage, col*gp.tileSize, row*gp.tileSize, null);
         
         
     }
     
     public void drawAvailableMove(Graphics2D g2){
-        g2.setColor(Color.green);
+        
         for (Move movesToShow1 : movesToShow) {
             
-            g2.fillRect(movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo * gp.tileSize, gp.tileSize, gp.tileSize);
+            //g2.fillRect(movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo * gp.tileSize, gp.tileSize, gp.tileSize);
+            g2.drawImage(moveImage, movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo*gp.tileSize, null);
+        
         }
     }
     

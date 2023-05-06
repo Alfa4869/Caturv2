@@ -30,8 +30,8 @@ public class Piece {
     
     
     //local variables
-    Move[] moves;
-    int counter;
+    List<Move> moves;
+    
     
     
 
@@ -42,25 +42,19 @@ public class Piece {
         this.isWhite = isWhite;
         this.PB = PB;
         
-        moves = new Move[20];
-        counter = 0;
+        moves = new ArrayList();
+        
         hadMoved = false;
         moveSince = 0;
         
         
     }
     
-    public Move[] getMoves(){
-        moves = new Move[20];
-        counter = 0;
-        getPieceMoves();
-        return moves;
-        
-    }
+    
     
     public List<Move> getMovesAsList(){
-        moves = new Move[20];
-        counter = 0;
+        
+        moves.clear();
         
         List<Move> listMoves = new ArrayList();
         getPieceMoves();
@@ -77,7 +71,6 @@ public class Piece {
     }
     
     public List<Move> getLegalMoves(){
-        
         
         List<Move> listMoves = getMovesAsList();
         List<Move> movesToRemove = new ArrayList();
@@ -98,24 +91,14 @@ public class Piece {
         }
         
         
-        
-        
-        
         return listMoves;
-        
-        
         
     }
     
     protected void addMove(int toRow, int toCol, String type){
         
-        Move move = new Move(row, col, toRow, toCol, model,isWhite, type );
+        moves.add(new Move(row, col, toRow, toCol, model,isWhite, type ));
         
-        
-        
-        
-        moves[counter] = move;
-        counter++;
         
         
     }
@@ -123,13 +106,12 @@ public class Piece {
     protected void addMove(int toRow, int toCol){
         
         
-        Move move = new Move(row, col, toRow, toCol, model, isWhite);
+        moves.add( new Move(row, col, toRow, toCol, model, isWhite));
         
         
         
        
-        moves[counter] = move;
-        counter++;
+        
         
     }
     

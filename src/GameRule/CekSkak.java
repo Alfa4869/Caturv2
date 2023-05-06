@@ -119,32 +119,18 @@ public class CekSkak {
         }
         
         //get all opponent move
-        
-        for (int row = 0; row < sq.length; row++) {
-            for (int col = 0; col < sq[row].length; col++) {
-                if (sq[row][col].isWhite != nowColor && !"King".equals(sq[row][col].model)) {
-                    
-                    
-                    
-                    moves = sq[row][col].getMovesAsList();
-                    
-                    
+        for (Piece[] sq1 : sq) {
+            for (Piece sq11 : sq1) {
+                if (sq11.isWhite != nowColor && !"King".equals(sq11.model)) {
+                    moves = sq11.getMovesAsList();
                     
                     //apakah ada yang skak?
                     for (Move move1 : moves) {
-                        
-                        
-                        
-//                        System.out.println(move1.model);
-//                        System.out.println("Row:" + move1.rowTo + " Col:" + move1.colTo);
-//                        System.out.println("Kow:" + KingRow +     " Kol:" + KingCol);
-                        
                         
                         if (KingRow == move1.rowTo && KingCol == move1.colTo) {
                             return true;
                         }
                     }
-                    
                 }
             }
         }

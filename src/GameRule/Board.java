@@ -15,6 +15,8 @@ import Piece.Pawn;
 import caturv2.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author ASUS
@@ -89,7 +91,29 @@ public class Board {
         }
     }
     
-    
+    /**
+     * apakah color ter skakmat ??
+     * @param color
+     * @return true jika benar
+     */
+    public boolean isCheckMate(boolean color){
+        
+        
+        
+        for (Piece[] sq1 : sq) {
+            for (Piece sq11 : sq1) {
+                if (sq11.isWhite == color) {
+                    if (!sq11.getLegalMoves().isEmpty()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        
+        System.out.println("skakmat");
+        
+        return true;
+    }
     
     public void movePiece(Move move){
         

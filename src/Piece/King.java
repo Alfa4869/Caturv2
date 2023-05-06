@@ -40,28 +40,18 @@ public class King extends Piece{
         
         List<Move> moves;
         
-        for (int row = 0; row < PB.sq.length; row++) {
-            for (int col = 0; col < PB.sq[row].length; col++) {
-                if (PB.sq[row][col].isWhite != isWhite && !"King".equals(PB.sq[row][col].model)) {
-                    
-                    
-                    
-                    moves = PB.sq[row][col].getMovesAsList();
-                    
-                    
+        for (Piece[] sq : PB.sq) {
+            for (Piece sq1 : sq) {
+                if (sq1.isWhite != isWhite && !"King".equals(sq1.model)) {
+                    moves = sq1.getMovesAsList();
                     
                     //apakah ada yang skak?
                     for (Move move1 : moves) {
-                        
-                        
-                        
-//                        
                         
                         if (this.row == move1.rowTo && this.col == move1.colTo) {
                             return true;
                         }
                     }
-                    
                 }
             }
         }

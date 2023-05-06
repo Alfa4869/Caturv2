@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 
 import GameRule.Board;
 import GameRule.Move;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,7 +25,7 @@ public class Cursor {
     //lokal
     boolean noUp, noDown, noLeft, noRight, noSpace;
     int currentRow, currentCol;
-    Move[] movesToShow;
+    List<Move> movesToShow;
 
     public Cursor(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -31,12 +33,12 @@ public class Cursor {
         row = 0;
         col = 0;
         
-        movesToShow = new Move[20];
+        movesToShow = new ArrayList();
     }
     
     
     void resetMovesToShow(){
-        movesToShow = new Move[20];
+        movesToShow.clear();
     }
     
     
@@ -142,12 +144,7 @@ public class Cursor {
     public void drawAvailableMove(Graphics2D g2){
         g2.setColor(Color.green);
         for (Move movesToShow1 : movesToShow) {
-            if (movesToShow1 == null) {
-                break;
-            }
-            if ("illegal".equals(movesToShow1.type)) {
-                continue;
-            }
+            
             g2.fillRect(movesToShow1.colTo * gp.tileSize, movesToShow1.rowTo * gp.tileSize, gp.tileSize, gp.tileSize);
         }
     }

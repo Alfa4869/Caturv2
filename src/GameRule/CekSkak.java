@@ -12,6 +12,8 @@ import Piece.Knight;
 import Piece.Queen;
 import Piece.Rook;
 import Piece.Pawn;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,7 +25,7 @@ public class CekSkak {
     Piece[][] sq;
     
     
-    Move[] moves;
+    List<Move> moves;
 
     public CekSkak(Piece[][] sq, Move mov) {
         this.VB = createVirtualBoard(sq);
@@ -32,7 +34,7 @@ public class CekSkak {
         
         this.sq = copySq(VB.sq);
         
-        moves = new Move[30];
+        moves = new ArrayList();
     }
     
     private Piece[][] copySq(Piece[][] oldSq){
@@ -120,18 +122,18 @@ public class CekSkak {
         
         for (int row = 0; row < sq.length; row++) {
             for (int col = 0; col < sq[row].length; col++) {
-                if (sq[row][col].isWhite != nowColor) {
+                if (sq[row][col].isWhite != nowColor && !"King".equals(sq[row][col].model)) {
                     
-                    moves = sq[row][col].getMoves();
+                    
+                    
+                    moves = sq[row][col].getMovesAsList();
                     
                     
                     
                     //apakah ada yang skak?
                     for (Move move1 : moves) {
                         
-                        if (move1 == null) {
-                            break;
-                        }
+                        
                         
 //                        System.out.println(move1.model);
 //                        System.out.println("Row:" + move1.rowTo + " Col:" + move1.colTo);
@@ -156,7 +158,7 @@ public class CekSkak {
     
     public void movePiece(Move move){
         
-        if (move.model == "King") {
+        if ("King".equals(move.model)) {
             sq[move.rowTo][move.colTo] = new King(move.rowTo, move.colTo, move.fromColor, VB);
             sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, move.fromColor, VB );
             

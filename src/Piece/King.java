@@ -5,12 +5,16 @@
 package Piece;
 
 import GameRule.Board;
+import GameRule.Move;
+import java.util.List;
 import javax.imageio.ImageIO;
 /**
  *
  * @author ASUS
  */
 public class King extends Piece{
+    
+    
 
     public King(int row, int col, boolean isWhite, Board PB) {
         super(row, col, "King", isWhite, PB);
@@ -29,6 +33,39 @@ public class King extends Piece{
             
         }catch(Exception e){}
         
+    }
+    
+    
+    private boolean isOnCheck(){
+        
+        List<Move> moves;
+        
+        for (int row = 0; row < PB.sq.length; row++) {
+            for (int col = 0; col < PB.sq[row].length; col++) {
+                if (PB.sq[row][col].isWhite != isWhite && !"King".equals(PB.sq[row][col].model)) {
+                    
+                    
+                    
+                    moves = PB.sq[row][col].getMovesAsList();
+                    
+                    
+                    
+                    //apakah ada yang skak?
+                    for (Move move1 : moves) {
+                        
+                        
+                        
+//                        
+                        
+                        if (this.row == move1.rowTo && this.col == move1.colTo) {
+                            return true;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return false;
     }
     
     public void getPieceMoves(){
@@ -66,7 +103,7 @@ public class King extends Piece{
         }
         
         //CASTLING
-        if (!hadMoved) {
+        if (!hadMoved && !isOnCheck()) {
             //short castle
             if (!isHadMoved(row,7) && isEmpty(row,5) && isEmpty(row,6)) {
                 addMove(row,6,"Castling");

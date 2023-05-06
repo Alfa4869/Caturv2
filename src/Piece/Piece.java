@@ -7,7 +7,9 @@ package Piece;
 import GameRule.Move;
 import GameRule.Board;
 import GameRule.CekSkak;
+import java.util.List;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 /**
@@ -56,24 +58,50 @@ public class Piece {
         
     }
     
-    public Move[] getLegalMoves(){
-        Move[] newMoves= getMoves();
+    public List<Move> getMovesAsList(){
+        moves = new Move[20];
+        counter = 0;
         
+        List<Move> listMoves = new ArrayList();
+        getPieceMoves();
         
-        for (int idx = 0; idx < newMoves.length; idx++) {
-            
-            if (newMoves[idx] == null) {
+        for (Move move : moves) {
+            if (move == null) {
                 break;
             }
-            
-            CekSkak CK = new CekSkak(PB.sq, newMoves[idx]);
-            if (CK.isSkak(newMoves[idx])) {
+            listMoves.add(move);
+        }
+        
+        return listMoves;
+        
+    }
+    
+    public List<Move> getLegalMoves(){
+        
+        
+        List<Move> listMoves = getMovesAsList();
+        List<Move> movesToRemove = new ArrayList();
+        
+        
+        for (Move listMove : listMoves) {
+            CekSkak CK = new CekSkak(PB.sq, listMove);
+            if (CK.isSkak(listMove)) {
                 System.out.println("ada yang skak");
-                newMoves[idx].type = "illegal";
+                movesToRemove.add(listMove);
+                
             }
         }
         
-        return newMoves;
+        
+        for (Move moveToRemove : movesToRemove) {
+            listMoves.remove(moveToRemove);
+        }
+        
+        
+        
+        
+        
+        return listMoves;
         
         
         

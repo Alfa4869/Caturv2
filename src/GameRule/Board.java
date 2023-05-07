@@ -204,6 +204,17 @@ public class Board {
             sq[move.rowFrom][move.colFrom] = new Empty(move.rowFrom, move.colFrom, this );
         }
         
+        //cek Promosi Pawn
+        for (int row = 0; row < sq.length; row++) {
+            for (int col = 0; col < sq[row].length; col++) {
+                if (sq[row][col].model == "Pawn" && sq[row][col].siapPromosi) {
+                    sq[row][col] = new Queen(row,col,sq[row][col].isWhite,this);
+                    sq[row][col].getImage();
+                }
+                
+            }
+        }
+        
         addMoveSince();
         
     }

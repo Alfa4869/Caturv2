@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
  * @author ASUS
  */
 public class Pawn extends Piece{
-
+    
     public Pawn(int row, int col, boolean isWhite, Board PB) {
         super(row, col, "Pawn", isWhite, PB);
     }
@@ -100,7 +100,15 @@ public class Pawn extends Piece{
             }
         }
         
-        
+        if (isWhite) {
+            if (row == 0) {
+                siapPromosi = true;
+            }
+        }else{
+            if (row == 7) {
+                siapPromosi = true;
+            }
+        }
         
     
     }

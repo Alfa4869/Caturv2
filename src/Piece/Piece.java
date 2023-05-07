@@ -26,6 +26,7 @@ public class Piece {
     public boolean isWhite;
     public boolean hadMoved;
     public int moveSince;
+    public boolean siapPromosi = false;
     public BufferedImage image;
     public int poin;
     

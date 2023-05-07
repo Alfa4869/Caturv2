@@ -116,6 +116,40 @@ public class Bot implements IVirtualBoard{
         
     }
     
+    private Move getRandomMaxPoin(List<Integer> poins){
+        int max = Collections.max(poins);
+        
+        List<Move> newMoves = new ArrayList();
+        
+        for (int i = 0; i < poins.size(); i++) {
+            if (poins.get(i) == max) {
+                newMoves.add(LM.get(i));
+                
+            }
+        }
+        
+        return getRandomMove(newMoves);
+        
+        
+    }
+    
+    private Move getRandomMinPoin(List<Integer> poins){
+        int min = Collections.min(poins);
+        
+        List<Move> newMoves = new ArrayList();
+        
+        for (int i = 0; i < poins.size(); i++) {
+            if (poins.get(i) == min) {
+                newMoves.add(LM.get(i));
+                
+            }
+        }
+        
+        return getRandomMove(newMoves);
+        
+        
+    }
+    
     public Move getBestMove(int depth){
         List<Integer> poin = new ArrayList();
         
@@ -133,9 +167,10 @@ public class Bot implements IVirtualBoard{
         }
         
         if (color) {
-            return LM.get(poin.indexOf(Collections.max(poin)));
+            return getRandomMaxPoin(poin);
         }
-        return LM.get(poin.indexOf(Collections.min(poin)));
+        return getRandomMinPoin(poin);
+        
         
         
         

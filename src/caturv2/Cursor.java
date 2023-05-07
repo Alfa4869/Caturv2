@@ -4,12 +4,12 @@
  */
 package caturv2;
 
-import java.awt.Color;
+import GameRule.Bot;
 import java.awt.Graphics2D;
 
-import GameRule.Board;
 import GameRule.Move;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -23,6 +23,7 @@ public class Cursor {
     GamePanel gp;
     KeyHandler keyH;
     BufferedImage cursorImage, moveImage;
+    boolean turn;
     
     
     //lokal
@@ -38,7 +39,13 @@ public class Cursor {
         
         movesToShow = new ArrayList();
         
+        turn = true;
+        
         getImages();
+    }
+    
+    void nextTurn(){
+        turn = !turn;
     }
     
     
@@ -119,8 +126,19 @@ public class Cursor {
             if (isInMoves(row,col)) {
                 gp.PB.movePiece(getThisMove(row,col));
                 resetMovesToShow();
-                gp.PB.isCheckMate(true);
-                gp.PB.isCheckMate(false);
+                if (gp.PB.isCheckMate(true) || gp.PB.isCheckMate(false)) {
+                    
+                }else{
+                    nextTurn();
+                    Bot bot = new Bot(gp.PB, turn);
+                    //gp.PB.movePiece(bot.getRandomMove(gp.PB.getAllThisColorMoves(turn)));
+                    gp.PB.movePiece(bot.getBestMove(1));
+                    nextTurn();
+                }
+                
+                
+                
+                
                 
                 
                 
@@ -151,7 +169,7 @@ public class Cursor {
                 
             
             
-        }catch(Exception e){}
+        }catch(IOException e){}
     }
     
     public void draw(Graphics2D g2){

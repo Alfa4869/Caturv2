@@ -27,6 +27,7 @@ public class Piece {
     public boolean hadMoved;
     public int moveSince;
     public BufferedImage image;
+    public int poin;
     
     
     //local variables
@@ -41,6 +42,34 @@ public class Piece {
         this.model = model;
         this.isWhite = isWhite;
         this.PB = PB;
+        
+        
+        if (null != model) switch (model) {
+            case "King":
+                poin = 100;
+                break;
+            case "Queen":
+                poin = 9;
+                break;
+            case "Knight":
+                poin = 3;
+                break;
+            case "Bishop":
+                poin = 3;
+                break;
+            case "Pawn":
+                poin = 1;
+                break;
+            case "Empty":
+                poin = 0;
+                break;
+            case "Rook":
+                poin = 5;
+                break;
+            default:
+                poin = 0;
+                break;
+        }
         
         moves = new ArrayList();
         
@@ -116,7 +145,11 @@ public class Piece {
     }
     
     public boolean isEmpty(int row, int col){
-        return "Empty".equals(PB.sq[row][col].model);
+        if (isInBoard(row,col)) {
+            return "Empty".equals(PB.sq[row][col].model);
+        }
+        return false;
+        
     }
     
     public boolean isInBoard(int row, int col){

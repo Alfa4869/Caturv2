@@ -91,14 +91,54 @@ public class Board {
         }
     }
     
-    /**
-     * apakah color ter skakmat ??
-     * @param color
-     * @return true jika benar
-     */
+    public int getPoinRatio(){
+        int poins;
+        
+        poins = getThisColorPoin(true) - getThisColorPoin(false);
+        
+        
+        return poins;
+    }
+    
+    public int getThisColorPoin(boolean color){
+        int poins = 0;
+        //get all this color move
+        for (Piece[] sq1 : sq) {
+            for (Piece sq11 : sq1) {
+                if (sq11.isWhite == color ) {
+                    
+                    poins += sq11.poin;
+                    
+                    
+                }
+            }
+        }
+        
+        return poins;
+    }
+    
+    public List<Move> getAllThisColorMoves(boolean color){
+        
+        List<Move> moves = new ArrayList();
+        //get all this color move
+        for (Piece[] sq1 : sq) {
+            for (Piece sq11 : sq1) {
+                if (sq11.isWhite == color ) {
+                    
+                    moves.addAll(sq11.getLegalMoves());
+                    
+                    
+                }
+            }
+        }
+        
+        return moves;
+    }
+    
+    
     public boolean isCheckMate(boolean color){
         
-        
+        //return false jika ditemukan piece yang punya legalMove
         
         for (Piece[] sq1 : sq) {
             for (Piece sq11 : sq1) {

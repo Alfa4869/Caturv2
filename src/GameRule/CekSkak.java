@@ -4,6 +4,7 @@
  */
 package GameRule;
 
+import Interface.IVirtualBoard;
 import Piece.Piece;
 import Piece.Empty;
 import Piece.Bishop;
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * @author ASUS
  */
-public class CekSkak {
+public class CekSkak implements IVirtualBoard{
     
     Board VB;
     Piece[][] sq;
@@ -27,7 +28,7 @@ public class CekSkak {
     
     List<Move> moves;
 
-    public CekSkak(Piece[][] sq, Move mov) {
+    public CekSkak(Piece[][] sq, Move mov)  {
         this.VB = createVirtualBoard(sq);
         
         
@@ -37,7 +38,8 @@ public class CekSkak {
         moves = new ArrayList();
     }
     
-    private Piece[][] copySq(Piece[][] oldSq){
+    @Override
+    public Piece[][] copySq(Piece[][] oldSq){
         
         Piece[][] newSq = new Piece[8][8];
         
@@ -79,34 +81,27 @@ public class CekSkak {
         
     }
     
-    private Board createVirtualBoard(Piece[][] oldSq){
+    @Override
+    public Board createVirtualBoard(Piece[][] oldSq){
         
         
         return new Board(oldSq);
     }
     
     public boolean isSkak(Move move){
-        
-//        System.out.println("CEK SKAK");
-//        System.out.println("FROM "+ move.rowFrom + " " + move.colFrom);
-        
-        movePiece(move);
-        VB.sq = sq;
-        
-//        System.out.println("TO   "+ move.rowTo + " " + move.colTo);
-        
-        
+        //loka var
         boolean nowColor = sq[move.rowFrom][move.colFrom].isWhite;
-//        if (nowColor) {
-//            System.out.println("putih");
-//        }else{
-//            System.out.println("hitam");
-//        }
-        
         int KingRow = 0;
         int KingCol = 0;
         
-        //get king row, col
+        //move piece dalam Virtual Board
+        movePiece(move);
+        VB.sq = sq;
+        
+        
+        
+        
+        //get king row, col (termasuk setelah movePiece)
         for (int row = 0; row < sq.length; row++) {
             for (int col = 0; col < sq[row].length; col++) {
                 if (sq[row][col].model == "King" && sq[row][col].isWhite == nowColor) {

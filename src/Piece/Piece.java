@@ -109,7 +109,7 @@ public class Piece {
         for (Move listMove : listMoves) {
             CekSkak CK = new CekSkak(PB.sq, listMove);
             if (CK.isSkak(listMove)) {
-                System.out.println("ada yang skak");
+                //System.out.println("ada yang skak");
                 movesToRemove.add(listMove);
                 
             }

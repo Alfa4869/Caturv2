@@ -16,9 +16,9 @@ public interface IVirtualBoard {
     
     
     
-    Piece[][] copySq(Piece[][] oldSq);
+    Piece[][] copySq(Board oldBoard, Board newBoard);
     
-    Board createVirtualBoard(Piece[][] oldSq);
+    Board createVirtualBoard(Board oldBoard);
         
         
         

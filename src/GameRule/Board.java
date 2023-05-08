@@ -39,6 +39,10 @@ public class Board {
         
     }
     
+    public Board() {
+        
+    }
+    
     private void initBoard(){
         for (int row = 0; row < sq.length; row++) {
             for (int col = 0; col < sq[row].length; col++) {

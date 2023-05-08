@@ -34,7 +34,7 @@ public class Bot implements IVirtualBoard{
     
 
     public Bot(Board PB, boolean color) {
-        this.VB = createVirtualBoard(copySq(PB.sq));
+        this.VB = createVirtualBoard(PB);
         sq = VB.sq;
         this.color = color;
         
@@ -43,37 +43,35 @@ public class Bot implements IVirtualBoard{
     
     
     
-    
-    
-
-    @Override
-    public Piece[][] copySq(Piece[][] oldSq) {
+    public Piece[][] copySq(Board oldBoard, Board newBoard) {
+        Piece[][] oldSq = oldBoard.sq;
         Piece[][] newSq = new Piece[8][8];
+        
         
         for (int row = 0; row < oldSq.length; row++) {
             for (int col = 0; col < oldSq[row].length; col++) {
                 switch (oldSq[row][col].model) {
                     case "Pawn":
-                        newSq[row][col] = new Pawn(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new Pawn(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     case "Rook":
-                        newSq[row][col] = new Rook(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new Rook(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     case "Knight":
-                        newSq[row][col] = new Knight(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new Knight(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     case "Bishop":
-                        newSq[row][col] = new Bishop(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new Bishop(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     case "Queen":
-                        newSq[row][col] = new Queen(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new Queen(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     case "King":
-                        newSq[row][col] = new King(row,col,oldSq[row][col].isWhite, VB);
+                        newSq[row][col] = new King(row,col,oldSq[row][col].isWhite, newBoard);
                         break;
                     
                     case "Empty":
-                        newSq[row][col] = new Empty(row,col, VB);
+                        newSq[row][col] = new Empty(row,col, newBoard);
                         break;
                     default:
                         
@@ -86,10 +84,17 @@ public class Bot implements IVirtualBoard{
         
         return newSq;
     }
+    
 
+    
+
+    
     @Override
-    public Board createVirtualBoard(Piece[][] oldSq) {
-        return new Board(oldSq);    
+    public Board createVirtualBoard(Board oldBoard) {
+        
+        Board newBoard = new Board();
+        newBoard.sq = copySq(oldBoard, newBoard);
+        return newBoard;    
     }
     
     public Move getRandomMove(){
@@ -108,13 +113,7 @@ public class Bot implements IVirtualBoard{
         return moves.get(randomIndex);
     }
     
-    public int getThisMovePoin(){
-        List<Integer> poin = new ArrayList();
-        
-        
-        return Collections.max(poin);
-        
-    }
+    
     
     private Move getRandomMaxPoin(List<Integer> poins){
         int max = Collections.max(poins);
@@ -150,21 +149,67 @@ public class Bot implements IVirtualBoard{
         
     }
     
+    
+    // RECURSIVE
+    public int getThisBoardPoin(Board boardA, int depth){
+        
+        if (depth <= 0) {
+            System.out.println(boardA.getPoinRatio());
+            return boardA.getPoinRatio();
+        }
+        
+        List<Integer> poin = new ArrayList();
+        
+        
+        List<Move> thisBoardMoves = boardA.getAllThisColorMoves(color);
+        
+        Board boardB;
+        
+        for (Move move : thisBoardMoves) {
+            boardB = createVirtualBoard(boardA);
+            
+            boardB.movePiece(move);
+            
+            if (depth > 0) {
+                Bot opponentBot = new Bot(boardB, !color);
+            
+                boardB.movePiece(opponentBot.getBestMove(depth-1));
+            }
+            
+            
+            //cekBoard(boardB);
+            
+            poin.add(getThisBoardPoin(boardB, depth-1));
+            
+            
+        }
+        
+        
+        if (color) {
+            return Collections.max(poin);
+        }
+        return Collections.min(poin);
+        
+    }
+    
     public Move getBestMove(int depth){
         List<Integer> poin = new ArrayList();
         
         Board localBoard;
         
         for (Move move : LM) {
-            localBoard = createVirtualBoard(copySq(VB.sq));
-            localBoard.movePiece(move);
-            poin.add(localBoard.getPoinRatio());
+            localBoard = createVirtualBoard(VB);
+            
+            
+            cekBoard(localBoard);
+            
+            poin.add(getThisBoardPoin(localBoard, depth));
         }
         
-        System.out.println("-------");
-        for (Integer poi : poin) {
-            System.out.println(poi);
-        }
+//        System.out.println("-------");
+//        for (Integer poi : poin) {
+//            System.out.println(poi);
+//        }
         
         if (color) {
             return getRandomMaxPoin(poin);
@@ -175,5 +220,21 @@ public class Bot implements IVirtualBoard{
         
         
         
+    }
+
+    private void cekBoard(Board boardB) {
+        System.out.println("----------");
+        Piece[][] sq = boardB.sq;
+        for (Piece[] sq1 : sq) {
+            for (Piece sq11 : sq1) {
+                if ("Empty".equals(sq11.model)) {
+                    System.out.print("0 ");
+                }else{
+                    System.out.print(sq11.model.charAt(0) + " " );
+                }
+                
+            }
+            System.out.println("");
+        }
     }
 }

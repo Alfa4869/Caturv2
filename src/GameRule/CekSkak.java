@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author ASUS
  */
-public class CekSkak implements IVirtualBoard{
+public class CekSkak {
     
     Board VB;
     Piece[][] sq;
@@ -38,7 +38,7 @@ public class CekSkak implements IVirtualBoard{
         moves = new ArrayList();
     }
     
-    @Override
+    
     public Piece[][] copySq(Piece[][] oldSq){
         
         Piece[][] newSq = new Piece[8][8];
@@ -81,7 +81,7 @@ public class CekSkak implements IVirtualBoard{
         
     }
     
-    @Override
+    
     public Board createVirtualBoard(Piece[][] oldSq){
         
         

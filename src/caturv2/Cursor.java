@@ -132,7 +132,7 @@ public class Cursor {
                     nextTurn();
                     Bot bot = new Bot(gp.PB, turn);
                     //gp.PB.movePiece(bot.getRandomMove(gp.PB.getAllThisColorMoves(turn)));
-                    gp.PB.movePiece(bot.getBestMove(1));
+                    gp.PB.movePiece(bot.getBestMove(2));
                     nextTurn();
                 }
                 
